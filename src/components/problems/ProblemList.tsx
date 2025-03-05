@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Problem } from "@/lib/types";
 import ProblemCard from "./ProblemCard";
@@ -208,7 +207,7 @@ const ProblemList = ({ initialProblems }: ProblemListProps) => {
               <SelectValue placeholder="Experience Level" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Levels</SelectItem>
+              <SelectItem value="all">All Levels</SelectItem>
               <SelectItem value="beginner">Beginner</SelectItem>
               <SelectItem value="intermediate">Intermediate</SelectItem>
               <SelectItem value="advanced">Advanced</SelectItem>
