@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Code, Users, Briefcase, Brain, Award, Heart } from "lucide-react";
+import { ArrowRight, Code, Users, Briefcase, Brain, Award, Heart, Rocket, Building2 } from "lucide-react";
 import AuthModal from "@/components/auth/AuthModal";
 import ProblemList from "@/components/problems/ProblemList";
 import { useAuth } from "@/context/AuthContext";
@@ -83,6 +83,74 @@ const Index = () => {
                 </>
               )}
             </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Explore Sections */}
+      <section className="py-10 bg-muted/20 px-4">
+        <div className="max-container">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold tracking-tight">Explore SkillMate</h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Discover our three main sections to find exactly what you're looking for
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Problems Card */}
+            <Card className="border-none bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/20 shadow-md hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 flex flex-col h-full">
+                <div className="rounded-full w-12 h-12 bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+                  <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Problems</h3>
+                <p className="text-muted-foreground mb-6 flex-grow">
+                  Browse through challenges posted by startups looking for fresh perspectives and innovative solutions.
+                </p>
+                <Button asChild variant="outline" className="border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950/40 hover:bg-blue-50 dark:hover:bg-blue-900/50">
+                  <Link to="/problems">
+                    View Problems <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+            
+            {/* Startups Card */}
+            <Card className="border-none bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-950/20 dark:to-emerald-900/20 shadow-md hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 flex flex-col h-full">
+                <div className="rounded-full w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mb-4">
+                  <Building2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Startups</h3>
+                <p className="text-muted-foreground mb-6 flex-grow">
+                  Discover innovative startups seeking talent to help them grow and refine their products and services.
+                </p>
+                <Button asChild variant="outline" className="border-emerald-200 dark:border-emerald-800 bg-white dark:bg-emerald-950/40 hover:bg-emerald-50 dark:hover:bg-emerald-900/50">
+                  <Link to="/startups">
+                    View Startups <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+            
+            {/* Solvers Card */}
+            <Card className="border-none bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-950/20 dark:to-purple-900/20 shadow-md hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 flex flex-col h-full">
+                <div className="rounded-full w-12 h-12 bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
+                  <Brain className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Solvers</h3>
+                <p className="text-muted-foreground mb-6 flex-grow">
+                  Connect with talented students who are ready to apply their skills and knowledge to real-world problems.
+                </p>
+                <Button asChild variant="outline" className="border-purple-200 dark:border-purple-800 bg-white dark:bg-purple-950/40 hover:bg-purple-50 dark:hover:bg-purple-900/50">
+                  <Link to="/solvers">
+                    View Solvers <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
