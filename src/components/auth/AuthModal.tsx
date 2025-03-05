@@ -9,9 +9,10 @@ interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultTab?: "login" | "signup";
+  onSuccess?: () => void;  // Added onSuccess callback prop
 }
 
-const AuthModal = ({ isOpen, onClose, defaultTab = "login" }: AuthModalProps) => {
+const AuthModal = ({ isOpen, onClose, defaultTab = "login", onSuccess }: AuthModalProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   return (
@@ -30,10 +31,10 @@ const AuthModal = ({ isOpen, onClose, defaultTab = "login" }: AuthModalProps) =>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
           <TabsContent value="login" className="p-6 pt-4">
-            <LoginForm onSuccess={onClose} />
+            <LoginForm onSuccess={onSuccess} />
           </TabsContent>
           <TabsContent value="signup" className="p-6 pt-4">
-            <SignupForm onSuccess={onClose} />
+            <SignupForm onSuccess={onSuccess} />
           </TabsContent>
         </Tabs>
       </DialogContent>
