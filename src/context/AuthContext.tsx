@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@/lib/types";
+import { User, Application } from "@/lib/types";
 
 interface AuthContextType {
   user: User | null;
@@ -10,6 +10,8 @@ interface AuthContextType {
   loginWithGoogle: () => Promise<void>;
   signup: (email: string, password: string, name: string, role: 'student' | 'startup') => Promise<void>;
   logout: () => Promise<void>;
+  getApplications: () => Promise<Application[]>;
+  updateUserProfile: (userData: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,6 +52,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         skills: ["React", "TypeScript", "UI/UX"],
         languages: ["English", "Spanish"],
         availability: { status: "available", hours: 20 },
+        experienceLevel: "intermediate",
+        areasOfInterest: ["SaaS", "Fintech", "EdTech"],
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -77,6 +81,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         skills: ["React", "JavaScript"],
         languages: ["English"],
         availability: { status: "available" },
+        experienceLevel: "intermediate",
+        areasOfInterest: ["SaaS", "Fintech"],
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -100,6 +106,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         name,
         role,
+        experienceLevel: role === 'student' ? 'beginner' : undefined,
+        areasOfInterest: [],
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -128,6 +136,95 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const updateUserProfile = async (userData: Partial<User>) => {
+    setIsLoading(true);
+    try {
+      // Mock update profile - would use Supabase in real implementation
+      if (user) {
+        const updatedUser = { ...user, ...userData, updatedAt: new Date() };
+        setUser(updatedUser);
+        localStorage.setItem('skillmate-user', JSON.stringify(updatedUser));
+      }
+    } catch (error) {
+      console.error("Update profile error:", error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Mock function to get applications for a startup
+  const getApplications = async (): Promise<Application[]> => {
+    // In a real app, this would fetch from the backend
+    if (user?.role !== 'startup') return [];
+
+    // Mock applications data
+    const mockApplications: Application[] = [
+      {
+        id: "app1",
+        userId: "user1",
+        user: {
+          id: "user1",
+          email: "student1@example.com",
+          name: "John Student",
+          role: "student",
+          skills: ["React", "Node.js"],
+          experienceLevel: "intermediate",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        problemId: "1",
+        problem: {
+          id: "1",
+          title: "Develop a Mobile App UI/UX",
+          description: "We need a talented UI/UX designer...",
+          startupId: user.id,
+          requiredSkills: ["UI/UX", "Figma"],
+          experienceLevel: "intermediate",
+          status: "open",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        coverLetter: "I am very interested in this opportunity...",
+        status: "pending",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: "app2",
+        userId: "user2",
+        user: {
+          id: "user2",
+          email: "student2@example.com",
+          name: "Jane Student",
+          role: "student",
+          skills: ["UI/UX", "Figma", "Adobe XD"],
+          experienceLevel: "advanced",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        problemId: "1",
+        problem: {
+          id: "1",
+          title: "Develop a Mobile App UI/UX",
+          description: "We need a talented UI/UX designer...",
+          startupId: user.id,
+          requiredSkills: ["UI/UX", "Figma"],
+          experienceLevel: "intermediate",
+          status: "open",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        coverLetter: "I have extensive experience with mobile app design...",
+        status: "pending",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ];
+
+    return mockApplications;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -137,7 +234,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         login,
         loginWithGoogle,
         signup,
-        logout
+        logout,
+        getApplications,
+        updateUserProfile
       }}
     >
       {children}

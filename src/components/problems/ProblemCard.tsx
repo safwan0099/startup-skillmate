@@ -3,15 +3,17 @@ import { Problem } from "@/lib/types";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Briefcase, Tag } from "lucide-react";
+import { Calendar, Clock, Briefcase, Tag, Building2 } from "lucide-react";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 interface ProblemCardProps {
   problem: Problem;
   onApply?: (problemId: string) => void;
+  isFeatured?: boolean;
 }
 
-const ProblemCard = ({ problem, onApply }: ProblemCardProps) => {
+const ProblemCard = ({ problem, onApply, isFeatured }: ProblemCardProps) => {
   // Handle status badge display
   const getStatusBadge = () => {
     switch (problem.status) {
@@ -29,14 +31,26 @@ const ProblemCard = ({ problem, onApply }: ProblemCardProps) => {
   };
 
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
+    <Card className={`overflow-hidden transition-all duration-300 hover:shadow-md ${isFeatured ? 'border-primary/20' : ''}`}>
+      {isFeatured && (
+        <div className="bg-primary text-primary-foreground text-xs font-medium px-3 py-1">
+          Featured
+        </div>
+      )}
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div>
             <CardTitle className="text-lg">{problem.title}</CardTitle>
-            <CardDescription className="mt-1">
-              {problem.startup?.name || "Anonymous Startup"}
-            </CardDescription>
+            {problem.startup && (
+              <CardDescription className="mt-1 hover:underline">
+                <Link to={`/startups/${problem.startupId}`}>
+                  <span className="flex items-center">
+                    <Building2 className="h-3 w-3 mr-1" />
+                    {problem.startup?.companyName || problem.startup?.name || "Anonymous Startup"}
+                  </span>
+                </Link>
+              </CardDescription>
+            )}
           </div>
           {getStatusBadge()}
         </div>

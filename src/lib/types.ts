@@ -11,6 +11,16 @@ export interface User {
   experience?: Experience[]
   education?: Education[]
   availability?: Availability
+  areasOfInterest?: string[]
+  experienceLevel?: 'beginner' | 'intermediate' | 'advanced'
+  // Startup specific fields
+  companyName?: string
+  companyDescription?: string
+  sectors?: string[]
+  stage?: string
+  linkedinUrl?: string
+  websiteUrl?: string
+  founderNames?: string[]
   createdAt: Date
   updatedAt: Date
 }
@@ -54,6 +64,7 @@ export interface Problem {
   compensation?: string
   deadline?: Date
   status: 'draft' | 'open' | 'in_progress' | 'completed' | 'cancelled'
+  featured?: boolean
   createdAt: Date
   updatedAt: Date
 }
